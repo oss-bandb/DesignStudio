@@ -1,0 +1,5 @@
+include ':app'
+rootProject.name = "DesignStudio"
+include ':design1'
+include ':design1-compose'
+include ':design1-common'

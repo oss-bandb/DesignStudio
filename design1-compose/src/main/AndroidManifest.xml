@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dev.bandb.design1.compose">
+
+    <application>
+        <activity
+            android:name=".Design1ComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_design1_compose"/>
+    </application>
+
+</manifest>

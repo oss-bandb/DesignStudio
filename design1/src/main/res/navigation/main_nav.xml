@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/design1_nav"
+    app:startDestination="@id/taskGroupFragment">
+
+    <fragment
+        android:id="@+id/taskGroupFragment"
+        android:name="dev.bandb.designstudio.design1.TaskGroupFragment"
+        android:label="taskGroupFragment"
+        tools:layout="@layout/task_group_fragment">
+        <action
+            android:id="@+id/showTaskGroupDetails"
+            app:destination="@id/tasksFragment">
+            <argument
+                android:name="taskGroupId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:label="tasksFragment"
+        android:name="dev.bandb.designstudio.design1.TasksFragment"
+        tools:layout="@layout/tasks_fragment">
+        <argument
+            android:name="taskGroupId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/create_new_task"
+            app:destination="@id/createTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:label="createTaskFragment"
+        android:name="dev.bandb.designstudio.design1.CreateTaskFragment"
+        tools:layout="@layout/create_task_fragment" />
+
+</navigation>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">DesignStudio</string>
+    <string name="design1_toolbar_search">Search</string>
+    <string name="task_count">%1$d Tasks</string>
+    <string name="task_percentage">%1$d%%</string>
+    <string name="design1_welcome_message">Hello, Jane.</string>
+    <string name="design1_welcome_message_more">Looks like feel good.\nYou have 3 tasks to do today.</string>
+    <string name="design1_date">TODAY : SEPTEMBER 12, 2017</string>
+
+    <!-- Transition names -->
+    <string name="task_icon_transition_name">task_icon_transition</string>
+    <string name="tasks_group_name_transition_name">task_group_name_transition</string>
+    <string name="tasks_progress_bar_transition_name">tasks_progress_bar_transition</string>
+    <string name="tasks_count_transition_name">tasks_count_transition</string>
+    <string name="task_progress_transition_name">task_progress_transition</string>
+    <string name="task_create_transition_name">task_create_transition</string>
+    <string name="task_create_layout_transition_name">task_create_layout_transition</string>
+    <string name="toolbar_title">TODO</string>
+</resources>

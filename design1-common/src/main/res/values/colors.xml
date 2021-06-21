@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="salmon">#f67a66</color>
+    <color name="cornflower_blue">#5a89e6</color>
+    <color name="puerto_rico">#4ec5ac</color>
+    <color name="light_gray">#BDBDBD</color>
+    <color name="lighter_gray">#EAE0E0</color>
+    <color name="default_background_color">#4FBFDB</color>
+</resources>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="24dp"
+    android:transitionGroup="true"
+    android:transitionName="@string/task_create_layout_transition_name">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- TODO create a custom view for this? -->
+    <FrameLayout
+        android:id="@+id/task_icon_container"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/circle_shape_border"
+        android:transitionName="@string/task_icon_transition_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/task_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:outlineProvider="background"
+            tools:src="@drawable/ic_home"
+            tools:tint="@color/cornflower_blue" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/task_detail_count"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:textColor="@color/light_gray"
+        android:transitionName="@string/tasks_count_transition_name"
+        app:layout_constraintTop_toBottomOf="@id/task_icon_container"
+        tools:text="12 Tasks" />
+
+    <TextView
+        android:id="@+id/tasks_group_name"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
+        android:transitionName="@string/tasks_group_name_transition_name"
+        app:layout_constraintTop_toBottomOf="@id/task_detail_count"
+        tools:text="Work" />
+
+    <ProgressBar
+        android:id="@+id/tasks_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:progressTint="@color/cornflower_blue"
+        android:transitionName="@string/tasks_progress_bar_transition_name"
+        app:layout_constraintBottom_toBottomOf="@id/tasks_progress"
+        app:layout_constraintEnd_toStartOf="@+id/tasks_progress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tasks_progress"
+        tools:layout_editor_absoluteY="682dp"
+        tools:progress="24" />
+
+    <TextView
+        android:id="@+id/tasks_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:transitionName="@string/task_progress_transition_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@id/tasks_group_name"
+        tools:ignore="RtlSymmetry"
+        tools:text="24%" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/task_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tasks_progress"
+        tools:listitem="@layout/task_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_task_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:elevation="8dp"
+        android:src="@drawable/ic_add"
+        android:transitionName="@string/task_create_transition_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
