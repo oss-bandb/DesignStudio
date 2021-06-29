@@ -20,8 +20,8 @@
     </fragment>
     <fragment
         android:id="@+id/tasksFragment"
-        android:label="tasksFragment"
         android:name="dev.bandb.designstudio.design1.TasksFragment"
+        android:label="tasksFragment"
         tools:layout="@layout/tasks_fragment">
         <argument
             android:name="taskGroupId"
@@ -29,13 +29,20 @@
 
         <action
             android:id="@+id/create_new_task"
-            app:destination="@id/createTaskFragment" />
+            app:destination="@id/createTaskFragment">
+            <argument
+                android:name="taskGroupId"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/createTaskFragment"
-        android:label="createTaskFragment"
         android:name="dev.bandb.designstudio.design1.CreateTaskFragment"
-        tools:layout="@layout/create_task_fragment" />
+        tools:layout="@layout/create_task_fragment" >
+        <argument
+            android:name="taskGroupId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

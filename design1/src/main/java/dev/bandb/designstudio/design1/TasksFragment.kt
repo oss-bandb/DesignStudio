@@ -39,59 +39,7 @@ class TasksFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setEnterSharedElementCallback(object : SharedElementCallback() {
-            override fun onSharedElementStart(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                println("onSharedElementStart")
-            }
 
-            override fun onSharedElementEnd(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                println("TaskGroupFragment.onSharedElementEnd")
-            }
-
-            override fun onRejectSharedElements(rejectedSharedElements: MutableList<View>?) {
-                println("TaskGroupFragment.onRejectSharedElements")
-            }
-
-            override fun onMapSharedElements(
-                names: MutableList<String>?,
-                sharedElements: MutableMap<String, View>?
-            ) {
-                println("TaskGroupFragment.onMapSharedElements")
-            }
-
-
-            override fun onCaptureSharedElementSnapshot(
-                sharedElement: View?,
-                viewToGlobalMatrix: Matrix?,
-                screenBounds: RectF?
-            ): Parcelable {
-                println("TaskGroupFragment.onCaptureSharedElementSnapshot")
-                return super.onCaptureSharedElementSnapshot(sharedElement, viewToGlobalMatrix, screenBounds)
-            }
-
-            override fun onCreateSnapshotView(context: Context?, snapshot: Parcelable?): View {
-                println("TaskGroupFragment.onCreateSnapshotView")
-                return super.onCreateSnapshotView(context, snapshot)
-            }
-
-            override fun onSharedElementsArrived(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                listener: OnSharedElementsReadyListener?
-            ) {
-                println("TaskGroupFragment.onSharedElementsArrived")
-            }
-        })
-
-        exitTransition = Keep()
         setSharedEnterTransition()
         postponeEnterTransition()
 
@@ -129,7 +77,7 @@ class TasksFragment : BaseFragment() {
             val extras = FragmentNavigatorExtras(
                 binding.createTaskFab to resources.getString(R.string.task_create_transition_name),
             )
-            findNavController().navigate(TasksFragmentDirections.createNewTask(), extras)
+            findNavController().navigate(TasksFragmentDirections.createNewTask(args.taskGroupId), extras)
         }
 
     }

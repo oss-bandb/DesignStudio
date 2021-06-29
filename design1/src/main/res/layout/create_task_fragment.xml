@@ -4,28 +4,41 @@
       explicitly adding it to each one? -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/create_task_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/create_task_layout"
     android:background="@android:color/white">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/new_task_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="34dp"
+        android:layout_marginBottom="12dp"
         android:text="What tasks are you planning to perform?"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/toolbar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/new_task_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="text|textCapSentences|textAutoComplete"
+        android:background="@null"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_task_message" />
@@ -44,7 +57,7 @@
     <ImageButton
         android:id="@+id/new_task_create"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:src="@drawable/ic_add"
         android:transitionName="@string/task_create_transition_name"
         app:layout_constraintBottom_toBottomOf="parent"

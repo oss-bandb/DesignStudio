@@ -2,12 +2,22 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            android:src="@drawable/ic_close"
+            />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -15,9 +25,11 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/toolbar_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
             android:textColor="@android:color/white"
-            tools:textColor="@android:color/black"
-            tools:text="TODO"/>
+            android:textStyle="bold"
+            tools:text="TODO"
+            tools:textColor="@android:color/black" />
     </androidx.appcompat.widget.Toolbar>
 
 </merge>

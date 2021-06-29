@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.transition.Slide
+import com.google.android.material.transition.MaterialSharedAxis
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.databinding.TaskGroupFragmentBinding
 import dev.bandb.designstudio.design1.recycler.PeekingItemDecoration
@@ -44,6 +47,8 @@ class TaskGroupFragment : BaseFragment() {
         setupToolbar()
 
         // TODO: 2-06-2021 14:34 Slide only content and increase the duration
+        //exitTransition = Slide(Gravity.BOTTOM)
+        //exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         exitTransition = Keep()
         postponeEnterTransition()
 
@@ -148,6 +153,8 @@ class TaskGroupFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.task_group_menu, menu)
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
     }
 }
 
