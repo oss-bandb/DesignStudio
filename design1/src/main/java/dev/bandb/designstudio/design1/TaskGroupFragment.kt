@@ -12,8 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.transition.Slide
-import com.google.android.material.transition.MaterialSharedAxis
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.databinding.TaskGroupFragmentBinding
 import dev.bandb.designstudio.design1.recycler.PeekingItemDecoration
@@ -89,7 +87,7 @@ class TaskGroupFragment : BaseFragment() {
     private fun setupToolbar() {
         setHasOptionsMenu(true)
         with(requireActivity() as AppCompatActivity) {
-            setSupportActionBar(binding.toolbar.toolbar)
+            setSupportActionBar(binding.toolbarContainer.toolbar)
             supportActionBar?.setHomeButtonEnabled(true)
         }
     }
