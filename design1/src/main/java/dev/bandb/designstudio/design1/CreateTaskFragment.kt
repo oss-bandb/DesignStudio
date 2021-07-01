@@ -9,17 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.ViewPropertyAnimatorListenerAdapter
-import androidx.core.view.doOnPreDraw
+import androidx.core.view.*
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.*
+import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
 import dev.bandb.designstudio.design1.databinding.CreateTaskFragmentBinding
 import dev.bandb.designstudio.design1.databinding.CreateTaskGroupItemBinding
+import dev.bandb.designstudio.design1.windowinsetanimation.ControlFocusInsetsAnimationCallback
+import dev.bandb.designstudio.design1.windowinsetanimation.TranslateDeferringInsetsAnimationCallback
 
 
 class CreateTaskFragment : BaseFragment() {
@@ -36,19 +37,6 @@ class CreateTaskFragment : BaseFragment() {
         binding = CreateTaskFragmentBinding.inflate(layoutInflater, container, false)
         taskGroup = SampleData.taskGroups[args.taskGroupId]
 
-        // TODO: Android bug 5497 Workaround for adjust layout in Full Screen Mode when softkeyboard is visible.
-        KeyboardHeightHelper(
-            requireActivity(),
-            binding.root
-        ) { keyboardHeight: Int ->
-            binding.root.setPadding(
-                0,
-                0,
-                0,
-                keyboardHeight
-            )
-        }
-
         return binding.root
     }
 
@@ -58,17 +46,6 @@ class CreateTaskFragment : BaseFragment() {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
 
-        setEnterSharedElementCallback(object : androidx.core.app.SharedElementCallback() {
-            override fun onSharedElementEnd(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
-                //binding.newTaskField.showSoftKeyboard()
-            }
-
-        })
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
@@ -80,6 +57,8 @@ class CreateTaskFragment : BaseFragment() {
         setColors()
         setUpToolbar()
 
+        binding.newTaskField.showSoftKeyboard()
+
         postponeEnterTransition()
         binding.newTaskGroupList.apply {
             adapter = TaskGroupNameAdapter(SampleData.taskGroups)
@@ -89,6 +68,33 @@ class CreateTaskFragment : BaseFragment() {
             }
         }
 
+        setUpWindowInsetAnimation()
+    }
+
+    private fun setUpWindowInsetAnimation() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+        ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.newTaskCreate,
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.newTaskCreate,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime(),
+                // We explicitly allow dispatch to continue down to binding.messageHolder's
+                // child views, so that step 2.5 below receives the call
+                dispatchMode = WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE
+            )
+        )
+
+        ViewCompat.setWindowInsetsAnimationCallback(
+            binding.newTaskField,
+            ControlFocusInsetsAnimationCallback(binding.newTaskField)
+        )
     }
 
     private fun setUpToolbar() {

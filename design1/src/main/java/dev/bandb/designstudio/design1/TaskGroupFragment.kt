@@ -12,8 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.transition.Slide
-import com.google.android.material.transition.MaterialSharedAxis
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.databinding.TaskGroupFragmentBinding
 import dev.bandb.designstudio.design1.recycler.PeekingItemDecoration
@@ -83,7 +81,6 @@ class TaskGroupFragment : BaseFragment() {
         viewModel.backgroundColor.observe(viewLifecycleOwner, { color ->
             setBackgroundColor(color ?: R.color.default_background_color, true)
         })
-
     }
 
     private fun setupToolbar() {
