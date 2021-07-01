@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,9 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:visibility="gone"
             android:src="@drawable/ic_close"
-            />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -32,4 +33,4 @@
             tools:textColor="@android:color/black" />
     </androidx.appcompat.widget.Toolbar>
 
-</merge>
+</LinearLayout>

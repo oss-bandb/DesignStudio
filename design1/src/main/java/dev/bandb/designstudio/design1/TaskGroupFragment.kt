@@ -86,7 +86,7 @@ class TaskGroupFragment : BaseFragment() {
     private fun setupToolbar() {
         setHasOptionsMenu(true)
         with(requireActivity() as AppCompatActivity) {
-            setSupportActionBar(binding.toolbar.toolbar)
+            setSupportActionBar(binding.toolbarContainer.toolbar)
             supportActionBar?.setHomeButtonEnabled(true)
         }
     }
