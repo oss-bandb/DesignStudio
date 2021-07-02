@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -37,6 +39,11 @@ class TasksFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        }
+
         binding = TasksFragmentBinding.inflate(inflater, container, false)
         // FIXME first value somehow now always the default value
         setBackgroundColor(viewModel.backgroundColor.value ?: R.color.default_background_color)
