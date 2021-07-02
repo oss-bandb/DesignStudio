@@ -1,4 +1,4 @@
-package dev.bandb.designstudio.design1.recycler
+package dev.bandb.designstudio.design1.utils.recycler
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
-import dev.bandb.designstudio.design1.TaskHeaderViewHolder
+import dev.bandb.designstudio.design1.taskdetail.TaskHeaderViewHolder
 import kotlin.math.roundToInt
 
 // TODO refactor and clean up

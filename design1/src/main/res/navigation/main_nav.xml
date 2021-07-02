@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/taskGroupFragment"
-        android:name="dev.bandb.designstudio.design1.TaskGroupFragment"
+        android:name="dev.bandb.designstudio.design1.tasks.TasksFragment"
         android:label="taskGroupFragment"
-        tools:layout="@layout/task_group_fragment">
+        tools:layout="@layout/tasks_fragment">
         <action
             android:id="@+id/showTaskGroupDetails"
             app:destination="@id/tasksFragment">
@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/tasksFragment"
-        android:name="dev.bandb.designstudio.design1.TasksFragment"
+        android:name="dev.bandb.designstudio.design1.taskdetail.TaskDetailFragment"
         android:label="tasksFragment"
-        tools:layout="@layout/tasks_fragment">
+        tools:layout="@layout/task_detail_fragment">
         <argument
             android:name="taskGroupId"
             app:argType="integer" />
@@ -38,8 +38,8 @@
 
     <fragment
         android:id="@+id/createTaskFragment"
-        android:name="dev.bandb.designstudio.design1.CreateTaskFragment"
-        tools:layout="@layout/create_task_fragment" >
+        android:name="dev.bandb.designstudio.design1.newtask.NewTaskFragment"
+        tools:layout="@layout/new_task_fragment" >
         <argument
             android:name="taskGroupId"
             app:argType="integer" />

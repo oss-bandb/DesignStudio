@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.bandb.designstudio.design1.windowinsetanimation
+package dev.bandb.designstudio.design1.utils.windowinsetanimation
 
 import android.view.View
 import androidx.core.view.ViewCompat

@@ -1,32 +1,34 @@
-package dev.bandb.designstudio.design1
+package dev.bandb.designstudio.design1.newtask
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.*
 import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
+import dev.bandb.designstudio.design1.BaseFragment
+import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
-import dev.bandb.designstudio.design1.databinding.CreateTaskFragmentBinding
-import dev.bandb.designstudio.design1.databinding.CreateTaskGroupItemBinding
-import dev.bandb.designstudio.design1.windowinsetanimation.ControlFocusInsetsAnimationCallback
-import dev.bandb.designstudio.design1.windowinsetanimation.TranslateDeferringInsetsAnimationCallback
+import dev.bandb.designstudio.design1.databinding.NewTaskFragmentBinding
+import dev.bandb.designstudio.design1.databinding.NewTaskGroupItemBinding
+import dev.bandb.designstudio.design1.utils.showSoftKeyboard
+import dev.bandb.designstudio.design1.utils.windowinsetanimation.ControlFocusInsetsAnimationCallback
+import dev.bandb.designstudio.design1.utils.windowinsetanimation.TranslateDeferringInsetsAnimationCallback
 
 
-class CreateTaskFragment : BaseFragment() {
+class NewTaskFragment : BaseFragment() {
 
-    private val args: CreateTaskFragmentArgs by navArgs()
-    private lateinit var binding: CreateTaskFragmentBinding
+    private val args: NewTaskFragmentArgs by navArgs()
+    private lateinit var binding: NewTaskFragmentBinding
     private lateinit var taskGroup: TaskGroup
 
     override fun onCreateView(
@@ -34,7 +36,7 @@ class CreateTaskFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CreateTaskFragmentBinding.inflate(layoutInflater, container, false)
+        binding = NewTaskFragmentBinding.inflate(layoutInflater, container, false)
         taskGroup = SampleData.taskGroups[args.taskGroupId]
 
         return binding.root
@@ -60,6 +62,7 @@ class CreateTaskFragment : BaseFragment() {
         binding.newTaskField.showSoftKeyboard()
 
         postponeEnterTransition()
+        // XXX: possibly misunderstood
         binding.newTaskGroupList.apply {
             adapter = TaskGroupNameAdapter(SampleData.taskGroups)
 
@@ -98,8 +101,13 @@ class CreateTaskFragment : BaseFragment() {
     }
 
     private fun setUpToolbar() {
-        binding.toolbar.toolbarTitle.text = "New Task"
-        binding.toolbar.toolbarTitle.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+        binding.newTaskToolbar.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close))
+        binding.newTaskToolbar.toolbarTitle.text = getString(R.string.new_task_toolbar_title)
+        binding.newTaskToolbar.rightAction.visibility = View.INVISIBLE
+
+        binding.newTaskToolbar.leftAction.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setColors() {
@@ -110,21 +118,12 @@ class CreateTaskFragment : BaseFragment() {
     }
 }
 
-fun View.showSoftKeyboard() {
-    post {
-        if (this.requestFocus()) {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-        }
-    }
-}
-
 class TaskGroupNameAdapter(private val taskGroups: List<TaskGroup>) :
     RecyclerView.Adapter<TaskGroupNameViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskGroupNameViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return TaskGroupNameViewHolder(
-            CreateTaskGroupItemBinding.inflate(
+            NewTaskGroupItemBinding.inflate(
                 layoutInflater,
                 parent,
                 false
@@ -140,7 +139,7 @@ class TaskGroupNameAdapter(private val taskGroups: List<TaskGroup>) :
 
 }
 
-class TaskGroupNameViewHolder(private val binding: CreateTaskGroupItemBinding) :
+class TaskGroupNameViewHolder(private val binding: NewTaskGroupItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private val context = binding.root.context

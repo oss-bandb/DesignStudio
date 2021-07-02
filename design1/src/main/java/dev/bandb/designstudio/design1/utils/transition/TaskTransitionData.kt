@@ -1,4 +1,4 @@
-package dev.bandb.designstudio.design1.transition
+package dev.bandb.designstudio.design1.utils.transition
 
 import android.view.View
 

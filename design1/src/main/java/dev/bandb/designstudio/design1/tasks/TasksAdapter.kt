@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.bandb.designstudio.design1.common.TaskGroup
-import dev.bandb.designstudio.design1.databinding.TaskGroupItemBinding
-import dev.bandb.designstudio.design1.transition.TaskTransitionData
+import dev.bandb.designstudio.design1.databinding.TasksItemBinding
+import dev.bandb.designstudio.design1.utils.transition.TaskTransitionData
 
-internal class TaskGroupsAdapter(
+internal class TasksAdapter(
     private val taskGroups: List<TaskGroup>,
     private val onTaskGroupSelected: (TaskTransitionData) -> Unit
 ) :
@@ -17,7 +17,7 @@ internal class TaskGroupsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskGroupViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return TaskGroupViewHolder(
-            TaskGroupItemBinding.inflate(inflater, parent, false),
+            TasksItemBinding.inflate(inflater, parent, false),
             onTaskGroupSelected
         )
     }
@@ -30,7 +30,7 @@ internal class TaskGroupsAdapter(
 }
 
 class TaskGroupViewHolder(
-    private val binding: TaskGroupItemBinding,
+    private val binding: TasksItemBinding,
     private val onTaskGroupSelected: (TaskTransitionData) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
@@ -40,7 +40,7 @@ class TaskGroupViewHolder(
         itemView.setOnClickListener {
             onTaskGroupSelected(
                 TaskTransitionData(
-                    adapterPosition,
+                    bindingAdapterPosition,
                     arrayOf(
                         binding.taskIconContainer to context.getString(R.string.task_icon_transition_name),
                         binding.tasksGroupName to context.getString(R.string.tasks_group_name_transition_name),
@@ -85,20 +85,19 @@ class TaskGroupViewHolder(
     }
 
     private fun setTransitionNames() {
-//        val transitionName =
-        binding.root.transitionName = "test_$adapterPosition"
+        binding.root.transitionName = "test_$bindingAdapterPosition"
         binding.taskIconContainer.transitionName =
-            context.getString(R.string.task_icon_transition_name) + "_$adapterPosition"
+            context.getString(R.string.task_icon_transition_name) + "_$bindingAdapterPosition"
         binding.tasksGroupName.transitionName =
-            context.getString(R.string.tasks_group_name_transition_name) + "_$adapterPosition"
+            context.getString(R.string.tasks_group_name_transition_name) + "_$bindingAdapterPosition"
         binding.tasksProgressbar.transitionName =
-            context.getString(R.string.tasks_progress_bar_transition_name) + "_$adapterPosition"
+            context.getString(R.string.tasks_progress_bar_transition_name) + "_$bindingAdapterPosition"
         // TODO: 20-05-2021 20:53 The transitions do not work on changing the font size
         //  Custom solution presented at Google I/O 2016: https://www.youtube.com/watch?v=4L4fLrWDvAU&t=1051s
         binding.tasksCount.transitionName =
-            context.getString(R.string.tasks_count_transition_name) + "_$adapterPosition"
+            context.getString(R.string.tasks_count_transition_name) + "_$bindingAdapterPosition"
         binding.tasksProgress.transitionName =
-            context.getString(R.string.task_progress_transition_name) + "_$adapterPosition"
+            context.getString(R.string.task_progress_transition_name) + "_$bindingAdapterPosition"
     }
 }
 

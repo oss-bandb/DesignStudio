@@ -1,39 +1,43 @@
-package dev.bandb.designstudio.design1
+package dev.bandb.designstudio.design1.tasks
 
 import android.animation.ObjectAnimator
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.ColorRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
+import dev.bandb.designstudio.design1.BaseFragment
+import dev.bandb.designstudio.design1.R
+import dev.bandb.designstudio.design1.TasksAdapter
 import dev.bandb.designstudio.design1.common.SampleData
-import dev.bandb.designstudio.design1.databinding.TaskGroupFragmentBinding
-import dev.bandb.designstudio.design1.recycler.PeekingItemDecoration
-import dev.bandb.designstudio.design1.recycler.SnapScrollListener
-import dev.bandb.designstudio.design1.transition.Keep
-import dev.bandb.designstudio.design1.transition.TaskTransitionData
+import dev.bandb.designstudio.design1.databinding.TasksFragmentBinding
+import dev.bandb.designstudio.design1.utils.recycler.PeekingItemDecoration
+import dev.bandb.designstudio.design1.utils.recycler.SnapScrollListener
+import dev.bandb.designstudio.design1.utils.transition.Keep
+import dev.bandb.designstudio.design1.utils.transition.TaskTransitionData
 
 
 // TODO: 21-05-2021 22:56 Make background a gradient
 // FIXME: 4-06-2021 13:12 Shadow of the card view items gets a solid 1 pixel line after the transition
 // XXX: 4-06-2021 13:24 While transitioning this fragment should slide down, but it seems not to work correctly or not possible?
-class TaskGroupFragment : BaseFragment() {
+class TasksFragment : BaseFragment() {
 
-    private lateinit var binding: TaskGroupFragmentBinding
-    private val viewModel: TaskGroupViewModel by viewModels()
+    private lateinit var binding: TasksFragmentBinding
+    private val viewModel: TasksViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TaskGroupFragmentBinding.inflate(inflater, container, false)
+        binding = TasksFragmentBinding.inflate(inflater, container, false)
         // FIXME first value somehow now always the default value
         setBackgroundColor(viewModel.backgroundColor.value ?: R.color.default_background_color)
         return binding.root
@@ -63,7 +67,7 @@ class TaskGroupFragment : BaseFragment() {
             // TODO: 10-06-2021 15:21 Peeking value is not the same as the padding of the texts above
             addItemDecoration(PeekingItemDecoration(0.2))
 
-            adapter = TaskGroupsAdapter(SampleData.taskGroups) {
+            adapter = TasksAdapter(SampleData.taskGroups) {
                 navigateToDetails(it)
             }
 
@@ -84,11 +88,9 @@ class TaskGroupFragment : BaseFragment() {
     }
 
     private fun setupToolbar() {
-        setHasOptionsMenu(true)
-        with(requireActivity() as AppCompatActivity) {
-            setSupportActionBar(binding.toolbarContainer.toolbar)
-            supportActionBar?.setHomeButtonEnabled(true)
-        }
+        binding.toolbarContainer.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_menu))
+        binding.toolbarContainer.rightAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search))
+        binding.toolbarContainer.toolbarTitle.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
     }
 
     private fun setBackgroundColor(@ColorRes color: Int, animate: Boolean = false) {
@@ -118,8 +120,9 @@ class TaskGroupFragment : BaseFragment() {
     // FIXME: 25-05-2021 11:42 On returning the list in the detail view just disappears. This looks ugly. Can we use a transition
     //  on this list?
     private fun navigateToDetails(taskTransitionData: TaskTransitionData) {
-        val action =
-            TaskGroupFragmentDirections.showTaskGroupDetails(taskTransitionData.position)
+        val action = TasksFragmentDirections.showTaskGroupDetails(
+                taskTransitionData.position
+            )
 
         findNavController().navigate(
             action,
@@ -146,12 +149,6 @@ class TaskGroupFragment : BaseFragment() {
 //            startDelay = 180
 //        }
 //        ofFloat.start()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.task_group_menu, menu)
-        val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
     }
 }
 

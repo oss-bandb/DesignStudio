@@ -1,30 +1,26 @@
-package dev.bandb.designstudio.design1
+package dev.bandb.designstudio.design1.taskdetail
 
-import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Matrix
-import android.graphics.RectF
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.SharedElementCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
+import dev.bandb.designstudio.design1.BaseFragment
+import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
-import dev.bandb.designstudio.design1.databinding.TasksFragmentBinding
-import dev.bandb.designstudio.design1.recycler.SegmentedDividerItemDecoration
-import dev.bandb.designstudio.design1.transition.Keep
+import dev.bandb.designstudio.design1.databinding.TaskDetailFragmentBinding
+import dev.bandb.designstudio.design1.utils.recycler.SegmentedDividerItemDecoration
 
-class TasksFragment : BaseFragment() {
-    private val args: TasksFragmentArgs by navArgs()
-    private lateinit var binding: TasksFragmentBinding
+class TaskDetailFragment : BaseFragment() {
+    private val args: TaskDetailFragmentArgs by navArgs()
+    private lateinit var binding: TaskDetailFragmentBinding
     private lateinit var taskGroup: TaskGroup
 
     override fun onCreateView(
@@ -32,7 +28,7 @@ class TasksFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TasksFragmentBinding.inflate(inflater, container, false)
+        binding = TaskDetailFragmentBinding.inflate(inflater, container, false)
         taskGroup = SampleData.taskGroups[args.taskGroupId]
         return binding.root
     }
@@ -45,6 +41,7 @@ class TasksFragment : BaseFragment() {
 
         setIcon()
         setColors()
+        setupToolbar()
 
         val taskSize = taskGroup.tasks.size
         val finishedTasks = taskGroup.tasks.count { it.finished }
@@ -77,9 +74,23 @@ class TasksFragment : BaseFragment() {
             val extras = FragmentNavigatorExtras(
                 binding.createTaskFab to resources.getString(R.string.task_create_transition_name),
             )
-            findNavController().navigate(TasksFragmentDirections.createNewTask(args.taskGroupId), extras)
+            findNavController().navigate(
+                TaskDetailFragmentDirections.createNewTask(
+                    args.taskGroupId
+                ), extras
+            )
         }
 
+    }
+
+    private fun setupToolbar() {
+        binding.tasksToolbar.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_back_arrow))
+        binding.tasksToolbar.rightAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_more_vert))
+        binding.tasksToolbar.toolbarTitle.visibility = View.INVISIBLE
+
+        binding.tasksToolbar.leftAction.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setIcon() {
@@ -94,13 +105,13 @@ class TasksFragment : BaseFragment() {
     }
 
     // TODO can this be made better?
-    private fun createItemsWithHeaders(): MutableList<Item> {
+    private fun createItemsWithHeaders(): MutableList<TaskDetailItem> {
         val dateHeaders = taskGroup.tasks.sortedBy { it.createdAt }.groupBy { it.dueAt }
-        val items = mutableListOf<Item>()
+        val items = mutableListOf<TaskDetailItem>()
         dateHeaders.entries.forEach { entry ->
-            items.add(Item.TaskHeaderItem(entry.key))
+            items.add(TaskDetailItem.TaskHeaderItem(entry.key))
 
-            entry.value.forEach { task -> items.add(Item.TaskItem(task)) }
+            entry.value.forEach { task -> items.add(TaskDetailItem.TaskItem(task)) }
         }
         return items
     }

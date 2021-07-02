@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.bandb.designstudio.design1.windowinsetanimation
+package dev.bandb.designstudio.design1.utils.windowinsetanimation
 
 import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
 import android.view.View

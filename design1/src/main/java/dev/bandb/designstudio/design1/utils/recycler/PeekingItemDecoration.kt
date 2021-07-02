@@ -1,4 +1,4 @@
-package dev.bandb.designstudio.design1.recycler
+package dev.bandb.designstudio.design1.utils.recycler
 
 import android.graphics.Rect
 import android.view.View

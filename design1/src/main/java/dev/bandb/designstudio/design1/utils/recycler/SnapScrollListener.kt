@@ -1,4 +1,4 @@
-package dev.bandb.designstudio.design1.recycler
+package dev.bandb.designstudio.design1.utils.recycler
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
