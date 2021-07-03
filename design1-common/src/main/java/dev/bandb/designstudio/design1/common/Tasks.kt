@@ -192,7 +192,27 @@ object SampleData {
 
         TaskGroup(
             name = "Vacation",
-            tasks = listOf(),
+            tasks = listOf(
+                Task(
+                    name = "Pack clothes",
+                    createdAt = Clock.System.now().todayTime(),
+                    dueAt = Clock.System.now().today(),
+                    finished = true
+                ),
+                Task(
+                    name = "Pack medication",
+                    createdAt = Clock.System.now().todayTime(),
+                    dueAt = Clock.System.now().today(),
+                    finished = true
+                ),
+                Task(
+                    name = "Buy hand sanitizer",
+                    createdAt = Clock.System.now().todayTime(),
+                    dueAt = Clock.System.now().today(),
+                ),
+            ),
+            icon = R.drawable.ic_airplane,
+            color = R.color.default_background_color
         )
     )
 }
