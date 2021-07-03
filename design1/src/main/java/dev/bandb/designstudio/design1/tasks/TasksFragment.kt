@@ -1,6 +1,8 @@
 package dev.bandb.designstudio.design1.tasks
 
+import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -20,6 +23,7 @@ import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.TasksAdapter
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.databinding.TasksFragmentBinding
+import dev.bandb.designstudio.design1.utils.getBackgroundColor
 import dev.bandb.designstudio.design1.utils.recycler.PeekingItemDecoration
 import dev.bandb.designstudio.design1.utils.recycler.SnapScrollListener
 import dev.bandb.designstudio.design1.utils.transition.Keep
@@ -45,8 +49,6 @@ class TasksFragment : BaseFragment() {
         }
 
         binding = TasksFragmentBinding.inflate(inflater, container, false)
-        // FIXME first value somehow now always the default value
-        setBackgroundColor(viewModel.backgroundColor.value ?: R.color.default_background_color)
         return binding.root
     }
 
@@ -63,10 +65,15 @@ class TasksFragment : BaseFragment() {
 
         binding.profileImage.clipToOutline = true
 
-        // TODO: 26-05-2021 14:20 This seems strange in combination with line 36
-        SampleData.taskGroups[0].color?.let {
-            viewModel.setBackgroundColor(it)
-        }
+        viewModel.backgroundColor.observe(viewLifecycleOwner, {
+            ObjectAnimator.ofObject(
+                binding.root,
+                "backgroundColor",
+                ArgbEvaluator(),
+                binding.design1Layout.getBackgroundColor(),
+                ContextCompat.getColor(requireContext(), it)
+            ).setDuration(300).start()
+        })
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.taskGroupList)
