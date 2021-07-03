@@ -1,23 +1,19 @@
 package dev.bandb.designstudio.design1.tasks
 
-import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.google.android.material.transition.MaterialSharedAxis
 import dev.bandb.designstudio.design1.BaseFragment
 import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.TasksAdapter
@@ -59,21 +55,11 @@ class TasksFragment : BaseFragment() {
 
         // TODO: 2-06-2021 14:34 Slide only content and increase the duration
         //exitTransition = Slide(Gravity.BOTTOM)
-        //exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-        exitTransition = Keep()
+        //exitTransition = Keep()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         postponeEnterTransition()
 
         binding.profileImage.clipToOutline = true
-
-        viewModel.backgroundColor.observe(viewLifecycleOwner, {
-            ObjectAnimator.ofObject(
-                binding.root,
-                "backgroundColor",
-                ArgbEvaluator(),
-                binding.design1Layout.getBackgroundColor(),
-                ContextCompat.getColor(requireContext(), it)
-            ).setDuration(300).start()
-        })
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.taskGroupList)
@@ -108,7 +94,7 @@ class TasksFragment : BaseFragment() {
     }
 
     private fun setBackgroundColor(@ColorRes color: Int, animate: Boolean = false) {
-        val newColor = requireContext().getColor(color)
+        val newColor = ContextCompat.getColor(requireContext(), color)
         val view = binding.root
 
         // XXX animate while scrolling?
@@ -116,12 +102,10 @@ class TasksFragment : BaseFragment() {
         if (animate) {
             // BackgroundColor does not have a getter so we have to get the current
             // color ourselves
-            val currentColor =
-                (view.background as? ColorDrawable)?.color ?: newColor
             ObjectAnimator.ofArgb(
                 view,
                 "backgroundColor",
-                currentColor,
+                view.getBackgroundColor(),
                 newColor
             ).start()
         } else {
