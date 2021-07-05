@@ -45,14 +45,19 @@ class NewTaskFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
+            duration = 600
+        }
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+            duration = 600
+        }
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             interpolator = FastOutSlowInInterpolator()
             scrimColor = Color.TRANSPARENT
+            duration = 600
             setPathMotion(MaterialArcMotion())
         }
 

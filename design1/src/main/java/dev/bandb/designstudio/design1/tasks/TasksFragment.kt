@@ -56,7 +56,9 @@ class TasksFragment : BaseFragment() {
         // TODO: 2-06-2021 14:34 Slide only content and increase the duration
         //exitTransition = Slide(Gravity.BOTTOM)
         //exitTransition = Keep()
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
+            duration = 600
+        }
         postponeEnterTransition()
 
         binding.profileImage.clipToOutline = true
