@@ -98,7 +98,12 @@ class NewTaskFragment : BaseFragment() {
     }
 
     private fun setupToolbar() {
-        binding.newTaskToolbar.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close))
+        binding.newTaskToolbar.leftAction.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_close
+            )
+        )
         binding.newTaskToolbar.toolbarTitle.text = getString(R.string.new_task_toolbar_title)
         binding.newTaskToolbar.rightAction.visibility = View.INVISIBLE
 
@@ -114,9 +119,7 @@ class NewTaskFragment : BaseFragment() {
             binding.groupName.setIconResource(it)
         }
 
-        taskGroup.color?.let { color ->
-            binding.newTaskCreate.backgroundTintList =
-                ColorStateList.valueOf(requireContext().getColor(color))
-        }
+        binding.newTaskCreate.backgroundTintList =
+            ColorStateList.valueOf(requireContext().getColor(taskGroup.color))
     }
 }

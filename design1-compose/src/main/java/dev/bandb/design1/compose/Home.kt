@@ -24,12 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.bandb.design1.compose.ui.theme.Gray100
 import dev.bandb.designstudio.design1.common.SampleData
+import dev.bandb.designstudio.design1.common.TaskGroup
 
 @Composable
-fun Home() {
-    val color = colorResource(id = R.color.default_background_color)
-    val backgroundColor = remember { mutableStateOf(color) }
-    Surface(color = backgroundColor.value) {
+fun Home(taskGroups: List<TaskGroup>) {
+    val backgroundColor = remember { mutableStateOf(taskGroups[0].color) }
+    Surface(color = colorResource(id = backgroundColor.value)) {
         Column(modifier = Modifier.fillMaxHeight()) {
             TopAppBar(
                 title = {
@@ -99,5 +99,5 @@ fun HomeDetails(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 fun HomePreview() {
-    Home()
+    Home(SampleData.taskGroups)
 }

@@ -17,7 +17,7 @@ data class TaskGroup(
     val name: String,
     val tasks: List<Task>,
     @DrawableRes val icon: Int? = null,
-    @ColorRes val color: Int? = null        // TODO can we make this a gradient?
+    @ColorRes val color: Int = R.color.default_background_color        // TODO can we make this a gradient?
 )
 
 object SampleData {
