@@ -1,5 +1,7 @@
 package dev.bandb.design1.compose
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,7 +32,11 @@ import dev.bandb.designstudio.design1.common.TaskGroup
 @Composable
 fun Home(taskGroups: List<TaskGroup>) {
     val backgroundColor = remember { mutableStateOf(taskGroups[0].color) }
-    Surface(color = colorResource(id = backgroundColor.value)) {
+    val color by animateColorAsState(
+        targetValue = colorResource(id = backgroundColor.value),
+        animationSpec = tween(durationMillis = 500)
+    )
+    Surface(color = color) {
         Column(modifier = Modifier.fillMaxHeight()) {
             TopAppBar(
                 title = {
@@ -53,9 +60,18 @@ fun Home(taskGroups: List<TaskGroup>) {
                 elevation = 0.dp
             )
 
-            HomeDetails(modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 12.dp))
+            HomeDetails(
+                modifier = Modifier.padding(
+                    start = 24.dp,
+                    top = 24.dp,
+                    end = 24.dp,
+                    bottom = 12.dp
+                )
+            )
 
-            TaskList(SampleData.taskGroups, modifier = Modifier.padding(bottom = 64.dp))
+            TaskList(taskGroups, onTaskChanged = { taskGroup ->
+                backgroundColor.value = taskGroup.color
+            }, modifier = Modifier.padding(bottom = 64.dp))
         }
     }
 }
