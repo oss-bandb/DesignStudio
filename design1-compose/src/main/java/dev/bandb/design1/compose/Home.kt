@@ -3,12 +3,11 @@ package dev.bandb.design1.compose
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -86,9 +85,7 @@ fun HomeDetails(modifier: Modifier = Modifier) {
             contentDescription = null,
             modifier = Modifier
                 .size(50.dp)
-                .clip(RoundedCornerShape(50))
-                .border(2.dp, Color.Black)
-                .padding(4.dp)
+                .clip(CircleShape)
         )
 
         Text(

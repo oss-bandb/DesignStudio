@@ -3,6 +3,7 @@ package dev.bandb.design1.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import dev.bandb.design1.compose.ui.theme.Gray100
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
 import kotlinx.coroutines.flow.collect
@@ -61,8 +63,9 @@ fun TaskList(taskGroups: List<TaskGroup>, onTaskChanged : (TaskGroup) -> Unit, m
                         contentDescription = null,
                         modifier = Modifier
                             .size(50.dp)
-                            .clip(RoundedCornerShape(50))
-                            .border(2.dp, Color.Black),
+                            .clip(CircleShape)
+                            .border(1.dp, Gray100, CircleShape)
+                            .padding(8.dp),
                         colorFilter = ColorFilter.tint(iconColor)
                     )
                 }
