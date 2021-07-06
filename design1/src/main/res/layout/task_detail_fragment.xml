@@ -118,6 +118,7 @@
         android:src="@drawable/ic_add"
         android:transitionName="@string/task_create_transition_name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

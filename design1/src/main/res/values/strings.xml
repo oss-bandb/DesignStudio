@@ -17,4 +17,6 @@
     <string name="task_create_layout_transition_name">task_create_layout_transition</string>
     <string name="toolbar_title">TODO</string>
     <string name="new_task_toolbar_title">New Task</string>
+    <string name="new_task_do_at_today">Today</string>
+    <string name="new_task_message">What tasks are you planning to perform?</string>
 </resources>

@@ -139,7 +139,7 @@ class TaskDetailFragment : BaseFragment() {
         // TODO: 26-05-2021 13:39 ^CardView does not change the transition
         sharedElementEnterTransition = TransitionInflater.from(requireContext())
             .inflateTransition(R.transition.change_transform).apply {
-                duration = 600
+                duration = resources.getInteger(R.integer.reply_motion_duration_xlarge).toLong()
             }
     }
 }

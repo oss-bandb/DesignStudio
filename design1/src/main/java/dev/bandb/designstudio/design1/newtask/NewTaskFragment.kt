@@ -7,19 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.*
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
 import dev.bandb.designstudio.design1.BaseFragment
 import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
 import dev.bandb.designstudio.design1.databinding.NewTaskFragmentBinding
-import dev.bandb.designstudio.design1.databinding.NewTaskGroupItemBinding
 import dev.bandb.designstudio.design1.utils.showSoftKeyboard
 import dev.bandb.designstudio.design1.utils.windowinsetanimation.ControlFocusInsetsAnimationCallback
 import dev.bandb.designstudio.design1.utils.windowinsetanimation.TranslateDeferringInsetsAnimationCallback
@@ -46,10 +48,10 @@ class NewTaskFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true).apply {
-            duration = 600
+            duration = resources.getInteger(R.integer.reply_motion_duration_xlarge).toLong()
         }
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-            duration = 600
+            duration = resources.getInteger(R.integer.reply_motion_duration_xlarge).toLong()
         }
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
@@ -57,24 +59,14 @@ class NewTaskFragment : BaseFragment() {
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             interpolator = FastOutSlowInInterpolator()
             scrimColor = Color.TRANSPARENT
-            duration = 600
+            duration = resources.getInteger(R.integer.reply_motion_duration_xlarge).toLong()
             setPathMotion(MaterialArcMotion())
         }
 
-        setColors()
-        setUpToolbar()
+        setupUi()
+        setupToolbar()
 
         binding.newTaskField.showSoftKeyboard()
-
-        postponeEnterTransition()
-        // XXX: possibly misunderstood
-        binding.newTaskGroupList.apply {
-            adapter = TaskGroupNameAdapter(SampleData.taskGroups)
-
-            doOnPreDraw {
-                startPostponedEnterTransition()
-            }
-        }
 
         setUpWindowInsetAnimation()
     }
@@ -105,7 +97,7 @@ class NewTaskFragment : BaseFragment() {
         )
     }
 
-    private fun setUpToolbar() {
+    private fun setupToolbar() {
         binding.newTaskToolbar.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close))
         binding.newTaskToolbar.toolbarTitle.text = getString(R.string.new_task_toolbar_title)
         binding.newTaskToolbar.rightAction.visibility = View.INVISIBLE
@@ -115,46 +107,16 @@ class NewTaskFragment : BaseFragment() {
         }
     }
 
-    private fun setColors() {
+    private fun setupUi() {
+        binding.groupName.text = taskGroup.name
+
+        taskGroup.icon?.let {
+            binding.groupName.setIconResource(it)
+        }
+
         taskGroup.color?.let { color ->
             binding.newTaskCreate.backgroundTintList =
                 ColorStateList.valueOf(requireContext().getColor(color))
-        }
-    }
-}
-
-class TaskGroupNameAdapter(private val taskGroups: List<TaskGroup>) :
-    RecyclerView.Adapter<TaskGroupNameViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskGroupNameViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return TaskGroupNameViewHolder(
-            NewTaskGroupItemBinding.inflate(
-                layoutInflater,
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: TaskGroupNameViewHolder, position: Int) {
-        holder.bind(taskGroups[position])
-    }
-
-    override fun getItemCount(): Int = taskGroups.size
-
-}
-
-class TaskGroupNameViewHolder(private val binding: NewTaskGroupItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    private val context = binding.root.context
-
-    fun bind(taskGroup: TaskGroup) {
-        binding.groupName.text = taskGroup.name
-
-        taskGroup.icon?.let { iconRes ->
-            val icon = ContextCompat.getDrawable(context, iconRes)
-            binding.groupIcon.setImageDrawable(icon)
         }
     }
 }

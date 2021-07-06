@@ -1,6 +1,7 @@
 package dev.bandb.designstudio.design1.tasks
 
 import android.animation.ObjectAnimator
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,12 @@ import dev.bandb.designstudio.design1.utils.recycler.PeekingItemDecoration
 import dev.bandb.designstudio.design1.utils.recycler.SnapScrollListener
 import dev.bandb.designstudio.design1.utils.transition.Keep
 import dev.bandb.designstudio.design1.utils.transition.TaskTransitionData
+import android.text.style.StyleSpan
+
+import android.text.SpannableString
+
+
+
 
 
 // TODO: 21-05-2021 22:56 Make background a gradient
@@ -52,12 +59,13 @@ class TasksFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
+        setupUi()
 
         // TODO: 2-06-2021 14:34 Slide only content and increase the duration
         //exitTransition = Slide(Gravity.BOTTOM)
         //exitTransition = Keep()
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false).apply {
-            duration = 600
+            duration = resources.getInteger(R.integer.reply_motion_duration_xlarge).toLong()
         }
         postponeEnterTransition()
 
@@ -87,6 +95,15 @@ class TasksFragment : BaseFragment() {
         viewModel.backgroundColor.observe(viewLifecycleOwner, { color ->
             setBackgroundColor(color ?: R.color.default_background_color, true)
         })
+    }
+
+    private fun setupUi() {
+        val spannablecontent = SpannableString(binding.date.text)
+        spannablecontent.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0, "Today".length, 0
+        )
+        binding.date.text = spannablecontent
     }
 
     private fun setupToolbar() {
