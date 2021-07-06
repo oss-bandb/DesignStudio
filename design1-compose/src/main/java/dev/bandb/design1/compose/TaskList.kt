@@ -28,7 +28,11 @@ import kotlinx.coroutines.flow.collect
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TaskList(taskGroups: List<TaskGroup>, onTaskChanged : (TaskGroup) -> Unit, modifier: Modifier = Modifier, ) {
+fun TaskList(
+    taskGroups: List<TaskGroup>,
+    onTaskChanged: (TaskGroup) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val pagerState = rememberPagerState(pageCount = taskGroups.size)
 
     LaunchedEffect(pagerState) {
@@ -36,13 +40,13 @@ fun TaskList(taskGroups: List<TaskGroup>, onTaskChanged : (TaskGroup) -> Unit, m
             onTaskChanged(taskGroups[page])
         }
     }
+
     HorizontalPager(
         modifier = modifier.fillMaxWidth(),
         state = pagerState,
         itemSpacing = 24.dp
     ) { page ->
         val item = taskGroups[page]
-
 
         Card(
             modifier = modifier.fillMaxWidth(0.8f),
@@ -87,7 +91,8 @@ fun TaskList(taskGroups: List<TaskGroup>, onTaskChanged : (TaskGroup) -> Unit, m
                         progress = progress,
                         color = colorResource(
                             id = item.color
-                        )
+                        ),
+                        modifier = Modifier.weight(1f)
                     )
 
                     Text("${(progress * 100).toInt()}%", modifier = Modifier.padding(start = 12.dp))

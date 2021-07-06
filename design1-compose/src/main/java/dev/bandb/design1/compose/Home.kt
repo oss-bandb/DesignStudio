@@ -77,9 +77,7 @@ fun Home(taskGroups: List<TaskGroup>) {
 
 @Composable
 fun HomeDetails(modifier: Modifier = Modifier) {
-    val textColor = Gray100
     Column(modifier = modifier) {
-        // TODO: 10-06-2021 15:17 Create component for round image?
         Image(
             painter = painterResource(id = R.drawable.ic_person),
             contentDescription = null,
@@ -94,9 +92,10 @@ fun HomeDetails(modifier: Modifier = Modifier) {
             color = Color.White,
             modifier = Modifier.padding(top = 28.dp)
         )
+
         Text(
             "Looks like feel good.\nYou have 3 tasks to do today.",
-            color = textColor,
+            color = Gray100,
             modifier = Modifier.padding(top = 14.dp)
         )
 
