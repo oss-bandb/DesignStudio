@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.samples.insetsanimation
+package dev.bandb.designstudio.design1.utils.windowinsetanimation
 
 import android.view.View
 import androidx.core.view.OnApplyWindowInsetsListener

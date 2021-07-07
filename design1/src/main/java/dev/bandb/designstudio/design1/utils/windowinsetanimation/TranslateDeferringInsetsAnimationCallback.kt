@@ -18,7 +18,6 @@
  */
 package dev.bandb.designstudio.design1.utils.windowinsetanimation
 
-import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsAnimationCompat

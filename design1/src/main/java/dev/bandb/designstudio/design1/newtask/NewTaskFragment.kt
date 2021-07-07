@@ -16,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
-import com.google.android.samples.insetsanimation.RootViewDeferringInsetsCallback
+import dev.bandb.designstudio.design1.utils.windowinsetanimation.RootViewDeferringInsetsCallback
 import dev.bandb.designstudio.design1.BaseFragment
 import dev.bandb.designstudio.design1.R
 import dev.bandb.designstudio.design1.common.SampleData
