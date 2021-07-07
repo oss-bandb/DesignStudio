@@ -1,17 +1,19 @@
 package dev.bandb.design1.compose
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,12 +26,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.bandb.design1.compose.ui.theme.Gray100
 import dev.bandb.designstudio.design1.common.SampleData
+import dev.bandb.designstudio.design1.common.TaskGroup
 
 @Composable
-fun Home() {
-    val color = colorResource(id = R.color.default_background_color)
-    val backgroundColor = remember { mutableStateOf(color) }
-    Surface(color = backgroundColor.value) {
+fun Home(taskGroups: List<TaskGroup>) {
+    val backgroundColor = remember { mutableStateOf(taskGroups[0].color) }
+    val color by animateColorAsState(
+        targetValue = colorResource(id = backgroundColor.value),
+        animationSpec = tween(durationMillis = 500)
+    )
+    Surface(color = color) {
         Column(modifier = Modifier.fillMaxHeight()) {
             TopAppBar(
                 title = {
@@ -53,9 +59,18 @@ fun Home() {
                 elevation = 0.dp
             )
 
-            HomeDetails(modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 12.dp))
+            HomeDetails(
+                modifier = Modifier.padding(
+                    start = 24.dp,
+                    top = 24.dp,
+                    end = 24.dp,
+                    bottom = 12.dp
+                )
+            )
 
-            TaskList(SampleData.taskGroups, modifier = Modifier.padding(bottom = 64.dp))
+            TaskList(taskGroups, onTaskChanged = { taskGroup ->
+                backgroundColor.value = taskGroup.color
+            }, modifier = Modifier.padding(bottom = 64.dp))
         }
     }
 }
@@ -70,9 +85,7 @@ fun HomeDetails(modifier: Modifier = Modifier) {
             contentDescription = null,
             modifier = Modifier
                 .size(50.dp)
-                .clip(RoundedCornerShape(50))
-                .border(2.dp, Color.Black)
-                .padding(4.dp)
+                .clip(CircleShape)
         )
 
         Text(
@@ -99,5 +112,5 @@ fun HomeDetails(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 fun HomePreview() {
-    Home()
+    Home(SampleData.taskGroups)
 }

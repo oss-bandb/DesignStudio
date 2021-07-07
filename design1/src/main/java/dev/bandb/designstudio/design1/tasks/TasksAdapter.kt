@@ -64,16 +64,12 @@ class TaskGroupViewHolder(
         binding.tasksCount.text = context.getString(R.string.task_count, taskSize)
         binding.tasksProgressbar.max = taskSize
         binding.tasksProgressbar.progress = finishedTasks
-        taskGroup.color?.let { color ->
-            binding.tasksProgressbar.progressTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(context, color))
-        }
+        binding.tasksProgressbar.progressTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, taskGroup.color))
 
         taskGroup.icon?.let { iconRes ->
             val icon = ContextCompat.getDrawable(context, iconRes)?.apply {
-                taskGroup.color?.let { color ->
-                    setTint(context.getColor(color))
-                }
+                setTint(context.getColor(taskGroup.color))
             }
             binding.taskIcon.setImageDrawable(icon)
         }

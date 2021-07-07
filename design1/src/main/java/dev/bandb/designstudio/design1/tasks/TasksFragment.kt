@@ -83,7 +83,7 @@ class TasksFragment : BaseFragment() {
 
             addOnScrollListener(SnapScrollListener(snapHelper) { position ->
                 viewModel.setBackgroundColor(
-                    SampleData.taskGroups[position].color ?: R.color.default_background_color
+                    SampleData.taskGroups[position].color
                 )
             })
 
@@ -93,7 +93,7 @@ class TasksFragment : BaseFragment() {
         }
 
         viewModel.backgroundColor.observe(viewLifecycleOwner, { color ->
-            setBackgroundColor(color ?: R.color.default_background_color, true)
+            setBackgroundColor(color, true)
         })
     }
 

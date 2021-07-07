@@ -101,9 +101,7 @@ class TaskDetailFragment : BaseFragment() {
     private fun setIcon() {
         taskGroup.icon?.let { iconRes ->
             val icon = ContextCompat.getDrawable(requireContext(), iconRes)?.apply {
-                taskGroup.color?.let { color ->
-                    setTint(requireContext().getColor(color))
-                }
+                setTint(requireContext().getColor(taskGroup.color))
             }
             binding.taskIcon.setImageDrawable(icon)
         }
@@ -122,13 +120,11 @@ class TaskDetailFragment : BaseFragment() {
     }
 
     private fun setColors() {
-        taskGroup.color?.let { color ->
-            binding.createTaskFab.backgroundTintList =
-                ColorStateList.valueOf(requireContext().getColor(color))
+        binding.createTaskFab.backgroundTintList =
+            ColorStateList.valueOf(requireContext().getColor(taskGroup.color))
 
-            binding.tasksProgressbar.progressTintList =
-                ColorStateList.valueOf(requireContext().getColor(color))
-        }
+        binding.tasksProgressbar.progressTintList =
+            ColorStateList.valueOf(requireContext().getColor(taskGroup.color))
     }
 
     private fun setSharedEnterTransition() {
