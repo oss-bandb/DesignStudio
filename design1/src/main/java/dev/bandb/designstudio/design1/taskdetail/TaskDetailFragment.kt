@@ -29,7 +29,10 @@ class TaskDetailFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView).apply {
+        WindowInsetsControllerCompat(
+            requireActivity().window,
+            requireActivity().window.decorView
+        ).apply {
             isAppearanceLightStatusBars = true
             isAppearanceLightNavigationBars = true
         }
@@ -89,8 +92,18 @@ class TaskDetailFragment : BaseFragment() {
     }
 
     private fun setupToolbar() {
-        binding.tasksToolbar.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_back_arrow))
-        binding.tasksToolbar.rightAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_more_vert))
+        binding.tasksToolbar.leftAction.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_back_arrow
+            )
+        )
+        binding.tasksToolbar.rightAction.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_more_vert
+            )
+        )
         binding.tasksToolbar.toolbarTitle.visibility = View.INVISIBLE
 
         binding.tasksToolbar.leftAction.setOnClickListener {
@@ -99,12 +112,10 @@ class TaskDetailFragment : BaseFragment() {
     }
 
     private fun setIcon() {
-        taskGroup.icon?.let { iconRes ->
-            val icon = ContextCompat.getDrawable(requireContext(), iconRes)?.apply {
-                setTint(requireContext().getColor(taskGroup.color))
-            }
-            binding.taskIcon.setImageDrawable(icon)
+        val icon = ContextCompat.getDrawable(requireContext(), taskGroup.icon)?.apply {
+            setTint(requireContext().getColor(taskGroup.color))
         }
+        binding.taskIcon.setImageDrawable(icon)
     }
 
     // TODO can this be made better?

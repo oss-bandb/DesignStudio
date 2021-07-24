@@ -3,6 +3,8 @@ package dev.bandb.designstudio.design1.tasks
 import android.animation.ObjectAnimator
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,14 +25,7 @@ import dev.bandb.designstudio.design1.databinding.TasksFragmentBinding
 import dev.bandb.designstudio.design1.utils.getBackgroundColor
 import dev.bandb.designstudio.design1.utils.recycler.PeekingItemDecoration
 import dev.bandb.designstudio.design1.utils.recycler.SnapScrollListener
-import dev.bandb.designstudio.design1.utils.transition.Keep
 import dev.bandb.designstudio.design1.utils.transition.TaskTransitionData
-import android.text.style.StyleSpan
-
-import android.text.SpannableString
-
-
-
 
 
 // TODO: 21-05-2021 22:56 Make background a gradient
@@ -46,7 +41,10 @@ class TasksFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView).apply {
+        WindowInsetsControllerCompat(
+            requireActivity().window,
+            requireActivity().window.decorView
+        ).apply {
             isAppearanceLightStatusBars = false
             isAppearanceLightNavigationBars = false
         }
@@ -98,18 +96,33 @@ class TasksFragment : BaseFragment() {
     }
 
     private fun setupUi() {
-        val spannablecontent = SpannableString(binding.date.text)
-        spannablecontent.setSpan(
+        val spannableContent = SpannableString(binding.date.text)
+        spannableContent.setSpan(
             StyleSpan(Typeface.BOLD),
             0, "Today".length, 0
         )
-        binding.date.text = spannablecontent
+        binding.date.text = spannableContent
     }
 
     private fun setupToolbar() {
-        binding.toolbarContainer.leftAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_menu))
-        binding.toolbarContainer.rightAction.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search))
-        binding.toolbarContainer.toolbarTitle.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+        binding.toolbarContainer.leftAction.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_menu
+            )
+        )
+        binding.toolbarContainer.rightAction.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_search
+            )
+        )
+        binding.toolbarContainer.toolbarTitle.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                android.R.color.white
+            )
+        )
     }
 
     private fun setBackgroundColor(@ColorRes color: Int, animate: Boolean = false) {
@@ -138,34 +151,13 @@ class TasksFragment : BaseFragment() {
     //  on this list?
     private fun navigateToDetails(taskTransitionData: TaskTransitionData) {
         val action = TasksFragmentDirections.showTaskGroupDetails(
-                taskTransitionData.position
-            )
+            taskTransitionData.position
+        )
 
         findNavController().navigate(
             action,
             FragmentNavigatorExtras(*taskTransitionData.sharedElements)
         )
-//        val ofFloat = ObjectAnimator.ofFloat(binding.toolbar.toolbar, "translationY", 200f).apply {
-//            addListener(object : AnimatorListenerAdapter() {
-//                override fun onAnimationStart(animation: Animator?) {
-//                }
-//
-//                override fun onAnimationCancel(animation: Animator?) {
-//                    println("TaskGroupFragment.onAnimationCancel")
-//                }
-//
-//                override fun onAnimationEnd(animation: Animator?) {
-//                    println("TaskGroupFragment.onAnimationEnd")
-//                }
-//
-//                override fun onAnimationRepeat(animation: Animator?) {
-//                    println("TaskGroupFragment.onAnimationRepeat")
-//                }
-//            })
-//            duration = 120
-//            startDelay = 180
-//        }
-//        ofFloat.start()
     }
 }
 

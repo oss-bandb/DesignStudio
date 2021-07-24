@@ -115,9 +115,7 @@ class NewTaskFragment : BaseFragment() {
     private fun setupUi() {
         binding.groupName.text = taskGroup.name
 
-        taskGroup.icon?.let {
-            binding.groupName.setIconResource(it)
-        }
+        binding.groupName.setIconResource(taskGroup.icon)
 
         binding.newTaskCreate.backgroundTintList =
             ColorStateList.valueOf(requireContext().getColor(taskGroup.color))
