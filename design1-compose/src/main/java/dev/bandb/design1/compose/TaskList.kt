@@ -2,6 +2,7 @@ package dev.bandb.design1.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.collect
 fun TaskList(
     taskGroups: List<TaskGroup>,
     onTaskChanged: (TaskGroup) -> Unit,
+    onTaskClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = taskGroups.size)
@@ -49,7 +51,7 @@ fun TaskList(
         val item = taskGroups[page]
 
         Card(
-            modifier = modifier.fillMaxWidth(0.8f),
+            modifier = modifier.fillMaxWidth(0.8f).clickable { onTaskClicked(page) },
             elevation = 8.dp,
             shape = RoundedCornerShape(8.dp)
         ) {
@@ -61,9 +63,8 @@ fun TaskList(
                     elevation = 0.dp
                 ) {
                     val iconColor = colorResource(id = item.color)
-                    val iconResource = item.icon ?: R.drawable.ic_person
                     Image(
-                        painter = painterResource(id = iconResource),
+                        painter = painterResource(id = item.icon),
                         contentDescription = null,
                         modifier = Modifier
                             .size(50.dp)
@@ -92,7 +93,7 @@ fun TaskList(
                         color = colorResource(
                             id = item.color
                         ),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.height(2.dp).weight(1f)
                     )
 
                     Text("${(progress * 100).toInt()}%", modifier = Modifier.padding(start = 12.dp))
@@ -105,5 +106,5 @@ fun TaskList(
 @Composable
 @Preview(showSystemUi = true)
 fun TaskListPreview() {
-    TaskList(SampleData.taskGroups, {})
+    TaskList(SampleData.taskGroups, {}, {})
 }
