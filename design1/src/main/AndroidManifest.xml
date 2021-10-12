@@ -3,7 +3,9 @@
     package="dev.bandb.designstudio.design1">
 
     <application>
-        <activity android:name=".Design1Activity"
+        <activity
+            android:name=".Design1Activity"
+            android:exported="false"
             android:theme="@style/Theme.DesignStudio.Design1" />
     </application>
 </manifest>

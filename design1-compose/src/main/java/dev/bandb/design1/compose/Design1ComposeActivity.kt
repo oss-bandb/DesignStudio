@@ -8,8 +8,8 @@ import androidx.compose.material.Surface
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dev.bandb.design1.compose.taskdetail.TaskDetail
 import dev.bandb.design1.compose.ui.theme.DesignStudioTheme
 import dev.bandb.designstudio.design1.common.SampleData
