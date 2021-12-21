@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -29,12 +30,13 @@ import dev.bandb.designstudio.design1.common.SampleData
 import dev.bandb.designstudio.design1.common.TaskGroup
 
 @Composable
-fun Home(taskGroups: List<TaskGroup>) {
+fun Home(taskGroups: List<TaskGroup>, onTaskClicked: (Int) -> Unit) {
     val backgroundColor = remember { mutableStateOf(taskGroups[0].color) }
     val color by animateColorAsState(
         targetValue = colorResource(id = backgroundColor.value),
         animationSpec = tween(durationMillis = 500)
     )
+
     Surface(color = color) {
         Column(modifier = Modifier.fillMaxHeight()) {
             TopAppBar(
@@ -70,22 +72,21 @@ fun Home(taskGroups: List<TaskGroup>) {
 
             TaskList(taskGroups, onTaskChanged = { taskGroup ->
                 backgroundColor.value = taskGroup.color
-            }, modifier = Modifier.padding(bottom = 64.dp))
+            }, modifier = Modifier.padding(bottom = 64.dp), onTaskClicked = onTaskClicked)
         }
     }
 }
 
 @Composable
 fun HomeDetails(modifier: Modifier = Modifier) {
-    val textColor = Gray100
     Column(modifier = modifier) {
-        // TODO: 10-06-2021 15:17 Create component for round image?
         Image(
-            painter = painterResource(id = R.drawable.ic_person),
+            painter = painterResource(id = R.drawable.avatar_9_raster),
             contentDescription = null,
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape)
+                .shadow(elevation = 12.dp, shape = CircleShape, clip = false)
         )
 
         Text(
@@ -94,9 +95,10 @@ fun HomeDetails(modifier: Modifier = Modifier) {
             color = Color.White,
             modifier = Modifier.padding(top = 28.dp)
         )
+
         Text(
             "Looks like feel good.\nYou have 3 tasks to do today.",
-            color = textColor,
+            color = Gray100,
             modifier = Modifier.padding(top = 14.dp)
         )
 
@@ -112,5 +114,5 @@ fun HomeDetails(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 fun HomePreview() {
-    Home(SampleData.taskGroups)
+    Home(SampleData.taskGroups) {}
 }
