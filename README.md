@@ -18,8 +18,9 @@ We were looking for a design that we could implement as a show case project. We 
 	* View-based
 	* Jetpack Compose (WIP)
 
-![Todo Concept by Jae-seong](image/TodoConcept.gif)
-
+<p align="center">
+<img src="image/TodoConcept.gif" alt="Todo Concept by Jae-seong" width="200"/>
+</p>
 # License
     Copyright 2019 - 2021 Block & Block
 
