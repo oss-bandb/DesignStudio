@@ -18,6 +18,8 @@ We were looking for a design that we could implement as a show case project. We 
 	* View-based
 	* Jetpack Compose (WIP)
 
+![Todo Concept by Jae-seong](image/TodoConcept.gif)
+
 # License
     Copyright 2019 - 2021 Block & Block
 
